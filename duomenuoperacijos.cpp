@@ -1,4 +1,3 @@
-
 #include "duomenuoperacijos.h"
 #include "pagalbinesfunkcijos.h"
 #include "laikas.h"
@@ -388,3 +387,4 @@ void suskirstyti_stl_antros_logika(std::vector<Studentas>& grupe, char pagalkask
 
     rusiavimas_i_failus(vargsiukai, galvociai, pagalkaskirstyti, "vargsiukai_vector_strat3.txt", "galvociai_vector_strat3.txt");
 }
+
