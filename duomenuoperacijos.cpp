@@ -1,3 +1,4 @@
+
 #include "duomenuoperacijos.h"
 #include "pagalbinesfunkcijos.h"
 #include "laikas.h"
