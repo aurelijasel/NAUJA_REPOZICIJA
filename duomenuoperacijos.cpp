@@ -299,35 +299,36 @@ void suskirstyti(std::list<Studentas>& grupe, char pagalkaskirstyti, char pagalk
     rusiavimas_i_failus(vargsiukai, grupe, pagalkaskirstyti, "vargsiukai_list_strat2.txt", "galvociai_list_strat2.txt");
 }
 
-// --------------------- Strategija 3 (optimizuota) ---------------------
+// --- Vector versija (lygina STL variantus) ---
 void suskirstyti_optimizuota(std::vector<Studentas>& grupe, char pagalkaskirstyti, char pagalkarikiuoti) {
     auto kopija1 = grupe;
     auto kopija2 = grupe;
 
     Laikmatis t1;
-    suskirstyti(kopija1, pagalkaskirstyti, pagalkarikiuoti, 1);
+    suskirstyti_optimizuota_pirma(kopija1, pagalkaskirstyti, pagalkarikiuoti); // STL: remove_copy_if
     double laikas1 = t1.elapsed();
 
     Laikmatis t2;
-    suskirstyti(kopija2, pagalkaskirstyti, pagalkarikiuoti, 2);
+    suskirstyti_stl_antros_logika(kopija2, pagalkaskirstyti, pagalkarikiuoti); // STL: partition
     double laikas2 = t2.elapsed();
 
     if (laikas1 <= laikas2)
-        suskirstyti(grupe, pagalkaskirstyti, pagalkarikiuoti, 1);
+        suskirstyti_optimizuota_pirma(grupe, pagalkaskirstyti, pagalkarikiuoti);
     else
-        suskirstyti(grupe, pagalkaskirstyti, pagalkarikiuoti, 2);
+        suskirstyti_stl_antros_logika(grupe, pagalkaskirstyti, pagalkarikiuoti);
 }
 
+// --- List versija (lygina be STL) ---
 void suskirstyti_optimizuota(std::list<Studentas>& grupe, char pagalkaskirstyti, char pagalkarikiuoti) {
     auto kopija1 = grupe;
     auto kopija2 = grupe;
 
     Laikmatis t1;
-    suskirstyti(kopija1, pagalkaskirstyti, pagalkarikiuoti, 1);
+    suskirstyti(kopija1, pagalkaskirstyti, pagalkarikiuoti, 1); // klasikinė (be STL)
     double laikas1 = t1.elapsed();
 
     Laikmatis t2;
-    suskirstyti(kopija2, pagalkaskirstyti, pagalkarikiuoti, 2);
+    suskirstyti(kopija2, pagalkaskirstyti, pagalkarikiuoti, 2); // erase versija
     double laikas2 = t2.elapsed();
 
     if (laikas1 <= laikas2)
