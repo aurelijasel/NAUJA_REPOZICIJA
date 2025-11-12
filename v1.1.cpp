@@ -29,7 +29,7 @@ int main() {
     if (veiksmas == "2") {
         std::vector<std::string> test_failai = {
             "studentai1000.txt",
-            //"studentai10000.txt",
+            "studentai10000.txt",
             //"studentai100000.txt",
             //"studentai1000000.txt",
             //"studentai10000000.txt"
@@ -42,16 +42,18 @@ int main() {
         }
 
         char pagalkaskirstyti, pagalkarikiuoti;
+        int strategija;
         cout << "Pasirinkite pagal ka suskirstyti studentus:\n"
             << "a - pagal vidurki\n"
             << "b - pagal mediana\n";
         cin >> pagalkaskirstyti;
+
         cout << "\nPagal ka rikiuoti studentus faile?\n"
             << "a - pagal pavarde\n"
             << "b - pagal varda\n"
             << "c - pagal galutini pazymi\n";
         cin >> pagalkarikiuoti;
-        int strategija;
+
         cout << "\nPasirinkite strategija:\n"
             << "1 - Du nauji konteineriai (vargsiukams ir galvociams)\n"
             << "2 - Vienas naujas konteineris (vargsiukai traukiami ir trinami is bendro)\n"
@@ -79,7 +81,7 @@ int main() {
                 if (strategija == 3)
                     suskirstyti_optimizuota(grupe, pagalkaskirstyti, pagalkarikiuoti);
                 else
-                    suskirstyti(grupe, pagalkaskirstyti, pagalkarikiuoti);
+                    suskirstyti(grupe, pagalkaskirstyti, pagalkarikiuoti, strategija);
 
                 double t_irasyti = t_irasyti_timer.elapsed();
                 double t_bendras = bendra.elapsed();
@@ -107,12 +109,16 @@ int main() {
                 if (strategija == 3)
                     suskirstyti_optimizuota(grupe, pagalkaskirstyti, pagalkarikiuoti);
                 else
-                    suskirstyti(grupe);
+                    suskirstyti(grupe, pagalkaskirstyti, pagalkarikiuoti, strategija);
 
                 double t_irasyti = t_irasyti_timer.elapsed();
                 double t_bendras = bendra.elapsed();
 
-                size_t atminties_list = sizeof(grupe);
+                size_t atminties_list = sizeof(grupe); // pats list objektas
+                for (auto& s : grupe) {
+                    atminties_list += sizeof(Studentas) + 2 * sizeof(void*); // node
+                    atminties_list += s.getPazymiai().capacity() * sizeof(double); // vector viduje
+                }
                 cout << "List (strategija " << strategija
                     << ") atminties uzimtis: " << atminties_list << " baitai" << endl;
 
